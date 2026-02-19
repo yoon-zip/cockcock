@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>팀콕콕 3월 모임🔥</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0e14;
+      --card: #101822;
+      --border: #1e3347;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #e11d48;
+      --ok: #22c55e;
+      --wait: #f59e0b;
+      --bad: #ef4444;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Noto Sans KR', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px 16px 40px;
+      line-height: 1.5;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 32px; }
+
+    .hero {
+      position: relative;
+      height: 240px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.75) contrast(1.1);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,14,20,0.1), rgba(10,14,20,0.85) 70%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px 28px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 6vw, 42px);
+      font-weight: 900;
+      letter-spacing: -1.2px;
+      margin-bottom: 8px;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.7);
+    }
+    .hero .sub {
+      font-size: 16px;
+      color: #e2e8f0;
+      opacity: 0.95;
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    .grid { display: grid; gap: 24px; }
+    @media (min-width: 960px) { .grid { grid-template-columns: 420px 1fr; } }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,0.5); }
+
+    .section-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+    .section-desc { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+
+    form { display: grid; gap: 16px; }
+    label { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 6px; display:block; }
+    input, select {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.6);
+      color: var(--text);
+      font-size: 15px;
+      transition: border-color 0.15s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(225,29,72,0.15);
+    }
+    .two-cols { display:grid; grid-template-columns: 1fr; gap:16px; }
+    @media (min-width: 500px) { .two-cols { grid-template-columns: 1fr 1fr; } }
+
+    .btn {
+      appearance: none;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, #c026d3 100%);
+      color: white;
+      box-shadow: 0 6px 20px rgba(225,29,72,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(225,29,72,0.45); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-secondary {
+      background: rgba(59,130,246,0.15);
+      border: 1px solid rgba(59,130,246,0.4);
+      color: #93c5fd;
+    }
+    .btn-secondary:hover { background: rgba(59,130,246,0.25); }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .pill-sync-ok  { background: rgba(34,197,94,0.15); color: #86efac; border:1px solid rgba(34,197,94,0.4); }
+    .pill-sync-err { background: rgba(239,68,68,0.15); color: #fca5a5; border:1px solid rgba(239,68,68,0.4); }
+
+    table { width:100%; border-collapse: collapse; font-size:14px; margin-top: 16px; }
+    th {
+      text-align:left;
+      padding: 12px 14px;
+      color: #cbd5e1;
+      font-weight: 600;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15,23,42,0.4);
+    }
+    td { padding: 14px 14px; border-bottom: 1px solid var(--border); }
+    tr:nth-child(even) { background: rgba(15,23,42,0.2); }
+    tr:hover { background: rgba(30,58,138,0.18); }
+
+    .status { display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:13px; }
+    .dot { width: 10px; height:10px; border-radius:50%; }
+    .s-ok .dot { background: var(--ok); }     .s-ok { color: #86efac; }
+    .s-wait .dot { background: var(--wait); } .s-wait { color: #fde047; }
+    .s-bad .dot { background: var(--bad); }   .s-bad { color: #fca5a5; }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      padding: 14px 24px;
+      border-radius: 14px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 500;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+      max-width: min(560px, calc(100vw - 24px));
+      text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .hint { font-size: 13px; color: var(--muted); margin-top: 12px; line-height: 1.6; }
+    .meta-row { display:flex; justify-content:center; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom: 32px; }
+
+    /* --- Footer CTA --- */
+    footer.footer-cta {
+      max-width: 1100px;
+      margin: 22px auto 0;
+      padding: 18px 16px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid rgba(148,163,184,0.18);
+    }
+    .footer-cta .line1 {
+      font-weight: 900;
+      color: #e2e8f0;
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .footer-cta .line2 {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .footer-cta a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+      border: 1px solid rgba(225,29,72,0.45);
+      background: rgba(225,29,72,0.12);
+      color: #fecdd3;
+    }
+    .footer-cta a:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(225,29,72,0.18);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="hero">
+        <img src="https://github.com/yoon-zip/yoondminton/blob/main/Frame%206%20(1).png?raw=true" alt="배드민턴 코트" />
+        <div class="hero-overlay">
+          <h1>팀콕콕 3월 모임🔥</h1>
+          <div class="sub">
+            장소, 시간<br>
+            (급수/나이 제한 없음)
+          </div>
+        </div>
+      </div>
+
+      <div class="meta-row">
+        <span class="pill pill-sync-ok" id="syncPill">⏳ 동기화 준비 중…</span>
+        <button class="btn btn-secondary" id="refreshBtn" type="button">새로고침</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- 신청 폼 -->
+      <section class="card">
+        <div class="section-title">참가 신청</div>
+        <div class="section-desc">입력 즉시 “대기 중”으로 등록됩니다</div>
+
+        <form id="applyForm">
+          <div>
+            <label for="name">이름</label>
+            <input id="name" name="name" placeholder="예: 안준영" required maxlength="30" />
+          </div>
+
+          <div class="two-cols">
+            <div>
+              <label for="level">급수</label>
+              <select id="level" name="level" required>
+                <option value="" disabled selected>선택하세요</option>
+                <option>초심</option>
+                <option>D</option>
+                <option>C</option>
+                <option>B</option>
+                <option>A</option>
+                <option>상관없음</option>
+              </select>
+            </div>
+            <div>
+              <label for="gender">성별</label>
+              <select id="gender" name="gender" required>
+                <option value="" disabled selected>선택하세요</option>
+                <option>여</option>
+                <option>남</option>
+                <option>기타</option>
+                <option>비공개</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" type="submit" id="submitBtn">신청하기</button>
+        </form>
+
+        <div class="hint">
+          ※ 신청 후 입금이 확인되면 ‘대기’에서 ‘참가’로 변경됩니다.<br>
+          우리은행 계좌번호 <br>
+          참가비 000원(대관료 포함, 콕 무제한)
+        </div>
+
+        <div class="toast" id="toast"></div>
+      </section>
+
+      <!-- 명단 -->
+      <section class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
+          <div>
+            <div class="section-title">참가 명단</div>
+            <div id="countText" style="color:var(--muted); font-size:14px;">0명</div>
+          </div>
+          <div>
+            <span class="pill" id="autoPill">🔄 자동 갱신: 10초</span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+          <input id="search" placeholder="이름 · 급수 검색" style="flex:1; min-width:180px;" />
+          <select id="filterStatus">
+            <option value="all" selected>전체 상태</option>
+            <option value="대기">대기만</option>
+            <option value="참가">참가만</option>
+          </select>
+          <select id="sortBy">
+            <option value="time_desc" selected>최신 신청순</option>
+            <option value="time_asc">오래된순</option>
+            <option value="name_asc">이름순</option>
+          </select>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width:120px;">상태</th>
+              <th>이름</th>
+              <th style="width:90px;">급수</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="3" style="text-align:center; padding:32px; color:var(--muted);">명단 불러오는 중…</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+
+  <!-- ✅ Footer CTA (원하는 문구를 “푸터”로 깔끔하게) -->
+  <footer class="footer-cta">
+    <div class="line1">번개 모임, 일일이 안내하는대신,</div>
+    <div class="line2">페이지 하나로 간편하게 관리해 보세요!</div>
+    <a href="https://instagram.com/yoondminton" target="_blank" rel="noopener">문의 👉 @yoondminton</a>
+  </footer>
+
+  <script>
+    // ── CONFIG (⚠️ 여기만 너 URL로 바꾸면 됨) ───────────────────────────
+    const CONFIG = {
+      API_BASE: "https://script.google.com/macros/s/AKfycbyFLnKzKrO6v4kAFnitED_mWnwAUVO83V8SYUnqY9LqviFkT2r5xSdK6622L4h7SqyG7A/exec",
+      POLL_MS: 10_000,
+    };
+
+    // ── helpers ───────────────────────────────────────────────
+    const $ = (id) => document.getElementById(id);
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function toast(msg, kind = "info") {
+      const el = $("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      if (kind === "ok") el.style.borderColor = "rgba(34,197,94,0.45)";
+      else if (kind === "bad") el.style.borderColor = "rgba(239,68,68,0.45)";
+      else el.style.borderColor = "rgba(30,51,71,0.9)";
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => el.classList.remove("show"), 3200);
+    }
+
+    function setPill(text, ok = true) {
+      const pill = $("syncPill");
+      pill.textContent = text;
+      pill.className = "pill " + (ok ? "pill-sync-ok" : "pill-sync-err");
+    }
+
+    function statusChip(statusRaw) {
+      const status = (statusRaw || "대기").trim();
+      if (status === "참가") return `<span class="status s-ok"><span class="dot"></span>참가</span>`;
+      if (status === "불참" || status === "취소") return `<span class="status s-bad"><span class="dot"></span>${escapeHtml(status)}</span>`;
+      return `<span class="status s-wait"><span class="dot"></span>대기</span>`;
+    }
+
+    // ── JSONP (GitHub Pages용 핵심) ───────────────────────────
+    function jsonp(url) {
+      return new Promise((resolve, reject) => {
+        const cb = "cb_" + Math.random().toString(36).slice(2);
+        const s = document.createElement("script");
+        const u = new URL(url);
+
+        u.searchParams.set("callback", cb);
+
+        window[cb] = (data) => {
+          cleanup();
+          resolve(data);
+        };
+
+        function cleanup() {
+          try { delete window[cb]; } catch {}
+          s.remove();
+        }
+
+        s.onerror = () => {
+          cleanup();
+          reject(new Error("JSONP load failed"));
+        };
+
+        s.src = u.toString();
+        document.body.appendChild(s);
+      });
+    }
+
+    // ── API (JSONP로 list/apply) ──────────────────────────────
+    async function apiGetList() {
+      const url = new URL(CONFIG.API_BASE);
+      url.searchParams.set("action", "list");
+      url.searchParams.set("_t", String(Date.now())); // cache bust
+      const data = await jsonp(url.toString());
+      if (!data || !Array.isArray(data.items)) throw new Error("응답 형식 오류 (items 배열 없음)");
+      return data.items;
+    }
+
+    async function apiApply(payload) {
+      const url = new URL(CONFIG.API_BASE);
+      url.searchParams.set("action", "apply");
+      url.searchParams.set("name", payload.name);
+      url.searchParams.set("level", payload.level);
+      url.searchParams.set("gender", payload.gender);
+      url.searchParams.set("_t", String(Date.now()));
+      const data = await jsonp(url.toString());
+      if (!data || data.ok !== true) throw new Error(data?.error || "신청 실패");
+      return data;
+    }
+
+    // ── state + render ────────────────────────────────────────
+    let allItems = [];
+
+    function applyFiltersAndRender() {
+      const q = $("search").value.trim().toLowerCase();
+      const f = $("filterStatus").value;
+      const sortBy = $("sortBy").value;
+
+      let items = [...allItems];
+
+      if (q) {
+        items = items.filter((it) => {
+          const s = `${it.name ?? ""} ${it.level ?? ""}`.toLowerCase();
+          return s.includes(q);
+        });
+      }
+
+      if (f !== "all") items = items.filter((it) => (it.status ?? "대기").trim() === f);
+
+      const t = (x) => {
+        const ms = new Date(x?.timestamp ?? x?.createdAt ?? "").getTime();
+        return Number.isFinite(ms) ? ms : 0;
+      };
+      if (sortBy === "time_desc") items.sort((a, b) => t(b) - t(a));
+      if (sortBy === "time_asc")  items.sort((a, b) => t(a) - t(b));
+      if (sortBy === "name_asc")  items.sort((a, b) => String(a.name ?? "").localeCompare(String(b.name ?? ""), "ko"));
+
+      $("countText").textContent = `${items.length}명`;
+
+      const tbody = $("tbody");
+      if (items.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:32px; color:var(--muted);">표시할 항목이 없습니다.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = items.map((it) => `
+        <tr>
+          <td>${statusChip(it.status)}</td>
+          <td style="font-weight:700;">${escapeHtml(it.name ?? "")}</td>
+          <td>${escapeHtml(it.level ?? "")}</td>
+        </tr>
+      `).join("");
+    }
+
+    // ── polling ───────────────────────────────────────────────
+    let pollTimer = null;
+    function startPolling() {
+      if (pollTimer) clearInterval(pollTimer);
+      pollTimer = setInterval(() => refreshList(false), CONFIG.POLL_MS);
+    }
+
+    // ── main actions ──────────────────────────────────────────
+    async function refreshList(showToast = true) {
+      try {
+        setPill("🔄 동기화 중…", true);
+        const items = await apiGetList();
+        allItems = items;
+        applyFiltersAndRender();
+        setPill("✅ 동기화 완료", true);
+        if (showToast) toast("명단을 새로 불러왔어요.", "ok");
+      } catch (e) {
+        setPill("⚠️ 동기화 실패", false);
+        if (showToast) toast(e.message || "불러오기 오류", "bad");
+        $("tbody").innerHTML = `
+          <tr>
+            <td colspan="3" style="text-align:center; padding:32px; color:var(--muted);">
+              불러오기 실패: ${escapeHtml(e.message || "오류")}
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    async function onSubmit(e) {
+      e.preventDefault();
+      const name = $("name").value.trim();
+      const level = $("level").value;
+      const gender = $("gender").value;
+
+      if (!name || !level || !gender) {
+        toast("이름/급수/성별을 모두 입력해줘!", "bad");
+        return;
+      }
+
+      $("submitBtn").disabled = true;
+      $("submitBtn").textContent = "신청 중…";
+
+      try {
+        await apiApply({ name, level, gender });
+        toast("신청 완료! 명단에 ‘대기’로 등록됐어요.", "ok");
+        $("applyForm").reset();
+        await refreshList(false);
+      } catch (err) {
+        toast(err.message || "신청 오류", "bad");
+      } finally {
+        $("submitBtn").disabled = false;
+        $("submitBtn").textContent = "신청하기";
+      }
+    }
+
+    // ── wire events ───────────────────────────────────────────
+    $("applyForm").addEventListener("submit", onSubmit);
+    $("refreshBtn").addEventListener("click", () => refreshList(true));
+    $("search").addEventListener("input", applyFiltersAndRender);
+    $("filterStatus").addEventListener("change", applyFiltersAndRender);
+    $("sortBy").addEventListener("change", applyFiltersAndRender);
+
+    // 초기 실행
+    $("autoPill").textContent = `🔄 자동 갱신: ${Math.round(CONFIG.POLL_MS/1000)}초`;
+    refreshList(false);
+    startPolling();
+  </script>
+</body>
+</html>
